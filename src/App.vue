@@ -1,26 +1,81 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Popup v-if="isPopupVisible" @closePopup="closePopup" />
+
+  <div class="container">
+    <button class="btn" @click="showPopup">Налоговый вычет</button>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Popup from './components/Popup'
 
 export default {
-  name: 'App',
+  data() {
+    return {
+      isPopupVisible: false
+    }
+  },
+  methods: {
+    showPopup() {
+      this.isPopupVisible = true
+    },
+    closePopup() {
+      this.isPopupVisible = false
+    },
+  },
   components: {
-    HelloWorld
+    Popup
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .container {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -99px;
+    margin-top: -28px;
+    width: 198px;
+    height: 56px;
+    padding: 0 auto;
+  }
+
+  .btn {
+      color: #fff;
+      background: transparent;
+      border-radius: 6px;
+      border: 1px solid #FFFFFF;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+
+      cursor: pointer;
+
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      padding: 12px 32px;
+  }
+  .btn:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  /* Media */
+  @media (max-width: 320px) {
+    .container {
+      margin-left: -75px;
+      margin-top: -20px;
+      width: 150px;
+      height: 40px;
+    }
+     .btn {
+       font-size: 12px;
+       line-height: 16px;
+
+       padding: 12px 20px;
+     }   
+  }
 </style>
