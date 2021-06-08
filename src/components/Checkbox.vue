@@ -2,14 +2,24 @@
     <label class="checkbox">
         <input class="checkbox__input" type="checkbox">
         <span class="check__box"></span>
-        <span class="check">78 000 рублей</span><p>в 1-ый год</p>
+        <span class="check">{{sumCheck.toLocaleString('ru-RU')}} рублей</span><p>в {{yearCheck}}-{{yearStr}} год</p>
     </label>
     <hr>
 </template>
 
 <script>
 export default {
-
+    props: {
+        sumCheck: {
+            type: Number,
+        },
+        yearCheck: {
+            type: Number,
+        },
+        yearStr: {
+            type: String,
+        },
+    },
 }
 </script>
 

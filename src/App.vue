@@ -53,7 +53,6 @@ export default {
 
       cursor: pointer;
 
-      font-weight: 600;
       font-size: 16px;
       line-height: 24px;
       padding: 12px 32px;
@@ -75,7 +74,7 @@ export default {
        font-size: 12px;
        line-height: 16px;
 
-       padding: 12px 20px;
+       padding: 12px 23px;
      }   
   }
 </style>
