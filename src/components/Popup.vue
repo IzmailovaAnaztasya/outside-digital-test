@@ -19,11 +19,10 @@
         <div class="popup-input">
           <h3>Ваша зарплата в месяц</h3>
           <input type="text" class="input-popup" placeholder="Введите данные" 
-            v-model="pay"
+            v-model.trim="pay"
             :class="payError ? 'input-error' : ''"
           />
           <p class="text-error" v-if="payError">Поле обязательно для заполнения</p>
-          <p class="text-error" v-if="payError">Должно быть число</p>
           <button class="btn-text" @click="calculate">Рассчитать</button>
           <div class="popup__checkbox" v-if="showCalculate">
             <h3>Итого можете внести в качестве досрочных:</h3>
@@ -31,7 +30,6 @@
                 :key="item.id"
                 :sumCheck="item"
                 :yearCheck="index + 1"
-                :yearStr="yearStr"
                 />
           </div>
         </div>
@@ -56,10 +54,8 @@ export default {
             payError: false,
             pay: '',
             formatPay: '',
-            check: '',
             arrDeduct: [],
             minDue: 260000,
-            yearStr: 'ый',
         }
     },
     methods: {
@@ -74,42 +70,28 @@ export default {
             // this.payError = isNaN(this.pay)
         },
         count() {
-            this.check = Number((this.pay * 12)* 0.13)
-            for (this.minDue; this.minDue > 0; this.minDue) {
-                if (this.minDue < this.check) {
-                    this.arrDeduct.push(this.minDue)
-                    break
-                }
-                this.minDue = this.minDue - this.check
-                this.arrDeduct.push(this.check)
-            }
-            this.showCalculate = true
-
-            console.log(this.arrDeduct);
+            this.arrDeduct = []
+            let isMinDue = this.minDue
+            let check = Number(this.pay) * 12* 0.13
+            if (!isNaN(check) && check > 0) {
+              for (isMinDue; isMinDue > 0; isMinDue) {
+                  if (isMinDue < check) {
+                      this.arrDeduct.push(isMinDue)
+                      break
+                  }
+                  isMinDue = isMinDue - check
+                  this.arrDeduct.push(check)
+              }
+              this.payError = false
+              //console.log(this.arrDeduct);
+              return this.showCalculate = true
+            } 
+            return this.payError = true
         },
         isFormatPay() {
             this.formatPay = Number(this.pay).toLocaleString('ru-RU')
-            this.pay = String(this.formatPay)
+            this.pay = this.formatPay
         },
-        setYearStr() {
-            this.yearStr = String(this.pay)
-            if ((this.yearStr[0]) === 1 || (this.yearStr[this.yearStr.length - 2]) === 1) {
-                this.yearStr = 'ый'
-            } else if ((this.yearStr[0]) === 3 || (this.yearStr[this.yearStr.length - 1]) === 3) {
-                this.yearStr = 'ий'
-            } else if ((this.yearStr[0]) === 2 || (this.yearStr[this.yearStr.length - 1]) === 2) {
-                this.yearStr = 'ой'
-            } else if ((this.yearStr[0]) > 4 && (this.yearStr[0]) < 6) {
-                this.yearStr = 'ый'
-            } else if ((this.yearStr[this.yearStr.length - 1]) > 4 && (this.yearStr[this.yearStr.length - 1]) < 6) {
-                this.yearStr = 'ый'
-            } else if ((this.yearStr[0]) > 6 && (this.yearStr[0]) < 9) {
-                this.yearStr = 'ой'
-            } else if ((this.yearStr[this.yearStr.length - 1]) > 6 && (this.yearStr[this.yearStr.length - 1]) < 9) {
-                this.yearStr = 'ой'
-            }
-            return this.yearStr
-        }
     },
     components: {
         Checkbox,

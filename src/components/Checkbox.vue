@@ -2,7 +2,7 @@
     <label class="checkbox">
         <input class="checkbox__input" type="checkbox">
         <span class="check__box"></span>
-        <span class="check">{{sumCheck.toLocaleString('ru-RU')}} рублей</span><p>в {{yearCheck}}-{{yearStr}} год</p>
+        <span class="check">{{sumCheck.toLocaleString('ru-RU')}} рублей</span><p>{{setInStr}} {{yearCheck}}-{{setYearStr}} год</p>
     </label>
     <hr>
 </template>
@@ -16,10 +16,36 @@ export default {
         yearCheck: {
             type: Number,
         },
-        yearStr: {
-            type: String,
-        },
     },
+    data() {
+        return {
+            yearStr: 'ый',
+            yearIn: 'в',
+        }
+    },
+    computed: {
+        setInStr() {
+            if (this.yearCheck === 2) {
+                return 'во'
+            }
+            return this.yearIn
+        },
+        setYearStr() {
+            let isYearCheck = String(this.yearCheck)
+            if ((isYearCheck.length === 1) && (isYearCheck[0]) === '2') {
+                return 'ой'
+            } else if ((isYearCheck.length > 1) && (isYearCheck[1]) === '2') {
+                return 'ой'
+            } else if ((isYearCheck[0]) === '3' && (isYearCheck[1]) === '3' || (isYearCheck[isYearCheck.length - 1]) === '3' && (isYearCheck[0]) !== '1') {
+                return 'ий'
+            } else if ((isYearCheck[0]) >= '6' && (isYearCheck[0]) < '9' || (isYearCheck[1]) >= '6' && (isYearCheck[1]) < '9') {
+                return 'ой'
+            } else if ((isYearCheck[0]) === '4' && (isYearCheck[1]) === '0') {
+                return 'ой'
+            }
+            return this.yearStr
+        }
+    }
 }
 </script>
 
