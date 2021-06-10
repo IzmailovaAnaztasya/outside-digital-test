@@ -35,8 +35,8 @@
         </div>
         <div class="popup-question">
           <h3>Что уменьшаем?</h3>
-          <button class="btn-tags">Платёж</button>
-          <button class="btn-tags">Срок</button>
+          <button class="btn-tags" @click="clickPayment" :class="{btnactive: paymentBtn}">Платёж</button>
+          <button class="btn-tags" @click="clickData" :class="{btnactive: dataBtn}">Срок</button>
         </div>
       </div>
       <button class="btn-big">Добавить</button>
@@ -56,6 +56,8 @@ export default {
             formatPay: '',
             arrDeduct: [],
             minDue: 260000,
+            paymentBtn: false,
+            dataBtn: false,
         }
     },
     methods: {
@@ -91,6 +93,20 @@ export default {
         isFormatPay() {
             this.formatPay = Number(this.pay).toLocaleString('ru-RU')
             this.pay = this.formatPay
+        },
+        clickPayment() {
+          if (this.showCalculate === true) {
+            this.paymentBtn = true
+            console.log('click Payment btn');
+            this.dataBtn = false
+          }
+        },
+        clickData() {
+          if (this.showCalculate === true) {
+            this.dataBtn = true
+            console.log('click Data btn');
+            this.paymentBtn = false
+          }
         },
     },
     components: {
@@ -258,7 +274,7 @@ export default {
 .btn-tags:hover {
   background: #dfe3e6;
 }
-.btn-tags:active {
+.btnactive {
   background: linear-gradient(
       255.35deg,
       #dc3131 0.83%,
