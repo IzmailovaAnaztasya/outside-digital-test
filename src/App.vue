@@ -55,7 +55,7 @@ export default {
 
       font-size: 16px;
       line-height: 24px;
-      padding: 12px 32px;
+      padding: 12px 0px;
   }
   .btn:hover {
     background: #fff;
@@ -72,9 +72,9 @@ export default {
     }
      .btn {
        font-size: 12px;
-       line-height: 14px;
+       line-height: 16px;
 
-       padding: 12px 20px;
+       padding: 12px 0px;
      }   
   }
 </style>
