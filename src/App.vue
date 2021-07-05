@@ -72,9 +72,9 @@ export default {
     }
      .btn {
        font-size: 12px;
-       line-height: 16px;
+       line-height: 14px;
 
-       padding: 12px 23px;
+       padding: 12px 20px;
      }   
   }
 </style>
